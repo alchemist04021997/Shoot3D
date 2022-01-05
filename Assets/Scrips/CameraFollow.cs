@@ -12,12 +12,12 @@ public class CameraFollow : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             mousePos = Input.mousePosition;
             mainCam.transform.position += new Vector3(Input.mousePosition.x - mousePos.x, 0, Input.mousePosition.y - mousePos.y) * 0.1f;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
         {
             mainCam.transform.position += new Vector3(Input.mousePosition.x - mousePos.x, 0, Input.mousePosition.y - mousePos.y) * 0.1f;
             mousePos = Input.mousePosition;

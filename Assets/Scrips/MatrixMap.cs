@@ -20,7 +20,6 @@ public class MatrixMap : MonoBehaviour
                 if (CheckHighZone(matrixMap[x, y]))
                 {
                     matrixMap[x, y] += Vector3.up;
-                    Debug.Log("aaa");
                 }
                 else
                 {

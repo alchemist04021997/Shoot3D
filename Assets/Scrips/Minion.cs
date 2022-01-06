@@ -7,6 +7,9 @@ public class Minion : Character, IMoveFast, IMoveNormal
     public List<Transform> points = new List<Transform>();
     //MatrixMap matrixMap;
     Vector3 lookForward;
+    float speed;
+    Animator anim;
+    Quaternion target;
     public void NormalMove(Vector3 speed)
     {
         if (speed == Vector3.zero)
@@ -14,12 +17,14 @@ public class Minion : Character, IMoveFast, IMoveNormal
             return;
         }
         transform.localPosition += speed;
-        transform.localRotation = Quaternion.LookRotation(speed);
+        target = Quaternion.LookRotation(speed);
+        transform.localRotation = Quaternion.RotateTowards(transform.localRotation, target, 15);
     }
-    //private void Awake()
-    //{
-    //    matrixMap = GameplayManager.Instance.MatrixMap;
-    //}
+    private void Awake()
+    {
+        //matrixMap = GameplayManager.Instance.MatrixMap;
+        anim = GetComponent<Animator>();
+    }
     //private void Start()
     //{
     //    transform.position = matrixMap.matrixMap[0, 0];
@@ -31,6 +36,7 @@ public class Minion : Character, IMoveFast, IMoveNormal
         //{
         //    points.Remove(points[0]);
         //}
+        anim.SetFloat("speed", speed);
         lookForward = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
@@ -48,7 +54,14 @@ public class Minion : Character, IMoveFast, IMoveNormal
         {
             lookForward += Vector3.left;
         }
-
-        NormalMove(lookForward.normalized * 0.1f);
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = 0.1f;
+        }
+        else
+        {
+            speed = 0.01f;
+        }
+        NormalMove(lookForward.normalized * speed);
     }
 }
